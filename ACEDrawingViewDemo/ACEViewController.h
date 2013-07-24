@@ -10,7 +10,7 @@
 
 @class ACEDrawingView;
 
-@interface ACEViewController : UIViewController
+@interface ACEViewController : UIViewController <UINavigationControllerDelegate, UIImagePickerControllerDelegate, UIPickerViewDelegate>
 
 @property (nonatomic, unsafe_unretained) IBOutlet ACEDrawingView *drawingView;
 @property (nonatomic, unsafe_unretained) IBOutlet UISlider *lineWidthSlider;
@@ -22,11 +22,14 @@
 @property (nonatomic, unsafe_unretained) IBOutlet UIBarButtonItem *colorButton;
 @property (nonatomic, unsafe_unretained) IBOutlet UIBarButtonItem *toolButton;
 
+@property (nonatomic, retain) UIImagePickerController *imgPicker;
+
 // actions
 - (IBAction)undo:(id)sender;
 - (IBAction)redo:(id)sender;
 - (IBAction)clear:(id)sender;
 - (IBAction)takeScreenshot:(id)sender;
+- (IBAction)addBackground:(id)sender;
 
 // settings
 - (IBAction)colorChange:(id)sender;

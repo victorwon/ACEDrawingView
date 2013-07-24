@@ -40,6 +40,7 @@
 @property (nonatomic, strong) NSMutableArray *bufferArray;
 @property (nonatomic, strong) id<ACEDrawingTool> currentTool;
 @property (nonatomic, strong) UIImage *image;
+@property (nonatomic, strong) UIImage *imageBackground;
 @end
 
 #pragma mark -
@@ -88,9 +89,24 @@
     // TODO: draw only the updated part of the image
     [self drawPath];
 #else
+    [self.backgroundImage drawInRect:[self getBackgroundBounds]];
     [self.image drawInRect:self.bounds];
     [self.currentTool draw];
 #endif
+}
+
+-(CGRect)getBackgroundBounds{
+    CGImageRef imgRef = [self.backgroundImage CGImage];
+    CGFloat width = CGImageGetWidth(imgRef);
+    CGFloat height = CGImageGetHeight(imgRef);
+    
+    CGFloat bgRatio = width/height;
+    CGFloat ratio = self.bounds.size.width/self.bounds.size.height;
+    
+    if (bgRatio > ratio)
+        return CGRectMake(0, (self.bounds.size.height - self.bounds.size.width/bgRatio)/2, self.bounds.size.width, self.bounds.size.width/bgRatio);
+    else
+        return CGRectMake((self.bounds.size.width-self.bounds.size.height*bgRatio)/2, 0, self.bounds.size.height*bgRatio, self.bounds.size.height);
 }
 
 - (void)updateCacheImage:(BOOL)redraw
@@ -101,6 +117,9 @@
     if (redraw) {
         // erase the previous image
         self.image = nil;
+        
+        if (self.backgroundImage)
+            self.image = [UIImage imageWithCGImage:self.backgroundImage.CGImage];
         
         // I need to redraw all the lines
         for (id<ACEDrawingTool> tool in self.pathArray) {
@@ -159,6 +178,19 @@
             return tool;
         }
     }
+}
+
+-(void)setBackgroundImage:(UIImage *)backgroundImage{
+    self->_backgroundImage = backgroundImage;
+    [self setNeedsDisplay];
+}
+
+-(UIImage*)mergedImage{
+    UIGraphicsBeginImageContext(self.bounds.size);
+    [self.layer renderInContext:UIGraphicsGetCurrentContext()];
+    UIImage *viewImage = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    return viewImage;
 }
 
 
@@ -290,6 +322,7 @@
     self.bufferArray = nil;
     self.currentTool = nil;
     self.image = nil;
+    self.backgroundImage = nil;
     [super dealloc];
 }
 
