@@ -25,6 +25,7 @@
 
 #import "ACEDrawingView.h"
 #import "ACEDrawingTools.h"
+#import "UIImage+fixOrientation.h"
 
 #import <QuartzCore/QuartzCore.h>
 
@@ -178,6 +179,7 @@
 }
 
 -(void)setBackgroundImage:(UIImage *)backgroundImage{
+    backgroundImage = [backgroundImage fixOrientation];
     CGRect bounds = [self getBackgroundBounds:backgroundImage];
     UIGraphicsBeginImageContextWithOptions(CGSizeMake(bounds.size.width, bounds.size.height), NO, 0.0);
     [backgroundImage drawInRect:CGRectMake(0, 0, bounds.size.width, bounds.size.height)];
