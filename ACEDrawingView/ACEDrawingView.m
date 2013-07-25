@@ -89,14 +89,14 @@
     // TODO: draw only the updated part of the image
     [self drawPath];
 #else
-    [self.backgroundImage drawInRect:[self getBackgroundBounds]];
+    [self.backgroundImage drawInRect:[self getBackgroundBounds:self.backgroundImage]];
     [self.image drawInRect:self.bounds];
     [self.currentTool draw];
 #endif
 }
 
--(CGRect)getBackgroundBounds{
-    CGImageRef imgRef = [self.backgroundImage CGImage];
+-(CGRect)getBackgroundBounds:(UIImage*)image{
+    CGImageRef imgRef = [image CGImage];
     CGFloat width = CGImageGetWidth(imgRef);
     CGFloat height = CGImageGetHeight(imgRef);
     
@@ -117,9 +117,6 @@
     if (redraw) {
         // erase the previous image
         self.image = nil;
-        
-        if (self.backgroundImage)
-            self.image = [UIImage imageWithCGImage:self.backgroundImage.CGImage];
         
         // I need to redraw all the lines
         for (id<ACEDrawingTool> tool in self.pathArray) {
@@ -181,7 +178,12 @@
 }
 
 -(void)setBackgroundImage:(UIImage *)backgroundImage{
-    self->_backgroundImage = backgroundImage;
+    CGRect bounds = [self getBackgroundBounds:backgroundImage];
+    UIGraphicsBeginImageContextWithOptions(CGSizeMake(bounds.size.width, bounds.size.height), NO, 0.0);
+    [backgroundImage drawInRect:CGRectMake(0, 0, bounds.size.width, bounds.size.height)];
+    UIImage *newImage = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    self->_backgroundImage = newImage;
     [self setNeedsDisplay];
 }
 
