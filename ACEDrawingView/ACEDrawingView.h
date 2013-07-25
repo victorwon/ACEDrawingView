@@ -50,7 +50,7 @@ typedef enum {
 
 
 // get the current drawing
-//@property (nonatomic, strong, readonly) UIImage *image;
+@property (nonatomic, strong, readonly) UIImage *image;
 -(UIImage*)mergedImage;
 @property (nonatomic, strong) UIImage *backgroundImage;
 @property (nonatomic, readonly) NSUInteger undoSteps;
