@@ -24,6 +24,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    [self initImagePicker];
     
     // set the delegate
     self.drawingView.delegate = self;
@@ -54,13 +55,17 @@
 - (IBAction)takeScreenshot:(id)sender
 {
     // show the preview image
-    self.previewImageView.image = self.drawingView.image;
+    self.previewImageView.image = self.drawingView.mergedImage;
     self.previewImageView.hidden = NO;
     
     // close it after 3 seconds
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 3 * NSEC_PER_SEC), dispatch_get_current_queue(), ^{
         self.previewImageView.hidden = YES;
     });
+}
+
+- (IBAction)addBackground:(id)sender {
+    [self getImage];
 }
 
 - (IBAction)undo:(id)sender
@@ -208,6 +213,34 @@
 - (IBAction)alphaChange:(UISlider *)sender
 {
     self.drawingView.lineAlpha = sender.value;
+}
+
+#pragma mark - Background Image
+
+- (void) initImagePicker
+{
+    self.imgPicker = [[UIImagePickerController alloc] init];
+    self.imgPicker.allowsEditing = NO;
+    self.imgPicker.delegate = self;
+}
+
+- (void) takePicture
+{
+    self.imgPicker.sourceType = UIImagePickerControllerSourceTypeCamera;
+    [self presentViewController:self.imgPicker animated:YES completion:nil];
+}
+
+- (void) getImage
+{ 
+    self.imgPicker.sourceType = UIImagePickerControllerSourceTypeSavedPhotosAlbum;
+    [self presentViewController:self.imgPicker animated:YES completion:nil];
+}
+
+- (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingImage:(UIImage *)img editingInfo:(NSDictionary *)editInfo {
+    if (img){
+        self.drawingView.backgroundImage = img;
+    }
+	[self dismissViewControllerAnimated:YES completion:nil];
 }
 
 @end

@@ -75,11 +75,17 @@
 								<reference key="IBUIToolbar" ref="1006386096"/>
 								<int key="IBUISystemItemIdentifier">5</int>
 							</object>
-							<object class="IBUIBarButtonItem" id="363843597">
+							<object class="IBUIBarButtonItem" id="758525676">
 								<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
 								<int key="IBUIStyle">1</int>
 								<reference key="IBUIToolbar" ref="1006386096"/>
 								<int key="IBUISystemItemIdentifier">15</int>
+							</object>
+							<object class="IBUIBarButtonItem" id="363843597">
+								<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
+								<int key="IBUIStyle">1</int>
+								<reference key="IBUIToolbar" ref="1006386096"/>
+								<int key="IBUISystemItemIdentifier">23</int>
 							</object>
 						</array>
 					</object>
@@ -382,6 +388,14 @@
 					</object>
 					<int key="connectionID">75</int>
 				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBCocoaTouchEventConnection" key="connection">
+						<string key="label">addBackground:</string>
+						<reference key="source" ref="758525676"/>
+						<reference key="destination" ref="372490531"/>
+					</object>
+					<int key="connectionID">79</int>
+				</object>
 			</array>
 			<object class="IBMutableOrderedSet" key="objectRecords">
 				<array key="orderedObjects">
@@ -430,6 +444,7 @@
 							<reference ref="363843597"/>
 							<reference ref="401980295"/>
 							<reference ref="488079967"/>
+							<reference ref="758525676"/>
 						</array>
 						<reference key="parent" ref="774585933"/>
 					</object>
@@ -510,6 +525,11 @@
 						<reference key="object" ref="153813130"/>
 						<reference key="parent" ref="644189279"/>
 					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">78</int>
+						<reference key="object" ref="758525676"/>
+						<reference key="parent" ref="1006386096"/>
+					</object>
 				</array>
 			</object>
 			<dictionary class="NSMutableDictionary" key="flattenedProperties">
@@ -535,12 +555,13 @@
 				<string key="65.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 				<string key="72.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 				<string key="73.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
+				<string key="78.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 			</dictionary>
 			<dictionary class="NSMutableDictionary" key="unlocalizedProperties"/>
 			<nil key="activeLocalization"/>
 			<dictionary class="NSMutableDictionary" key="localizations"/>
 			<nil key="sourceID"/>
-			<int key="maxID">78</int>
+			<int key="maxID">79</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<array class="NSMutableArray" key="referencedPartialClassDescriptions">
@@ -556,6 +577,7 @@
 					<string key="className">ACEViewController</string>
 					<string key="superclassName">UIViewController</string>
 					<dictionary class="NSMutableDictionary" key="actions">
+						<string key="addBackground:">id</string>
 						<string key="alphaChange:">UISlider</string>
 						<string key="clear:">id</string>
 						<string key="colorChange:">id</string>
@@ -568,6 +590,10 @@
 						<string key="widthChange:">UISlider</string>
 					</dictionary>
 					<dictionary class="NSMutableDictionary" key="actionInfosByName">
+						<object class="IBActionInfo" key="addBackground:">
+							<string key="name">addBackground:</string>
+							<string key="candidateClassName">id</string>
+						</object>
 						<object class="IBActionInfo" key="alphaChange:">
 							<string key="name">alphaChange:</string>
 							<string key="candidateClassName">UISlider</string>
