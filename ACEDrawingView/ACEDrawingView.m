@@ -267,9 +267,6 @@
     // update the image
     [self updateCacheImage:NO];
     
-    // clear the current tool
-    self.currentTool = nil;
-    
     // clear the redo queue
     [self.bufferArray removeAllObjects];
     
@@ -277,6 +274,10 @@
     if ([self.delegate respondsToSelector:@selector(drawingView:didEndDrawUsingTool:)]) {
         [self.delegate drawingView:self didEndDrawUsingTool:self.currentTool];
     }
+    
+    // clear the current tool
+    self.currentTool = nil;
+    
 }
 
 - (void)touchesCancelled:(NSSet *)touches withEvent:(UIEvent *)event
