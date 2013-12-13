@@ -223,6 +223,7 @@ CGPoint midPoint(CGPoint p1, CGPoint p2)
                                 rectToText.origin.y+(rectToText.size.height-textSize.height)/2,
                                 rectToText.size.width, textSize.height);
     }
+    [self.lineColor set];
     [self.text drawInRect:CGRectIntegral(rectToText) withFont:font];
 
 }
