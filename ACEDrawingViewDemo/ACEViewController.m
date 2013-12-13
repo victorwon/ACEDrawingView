@@ -14,7 +14,7 @@
 #define kActionSheetColor       100
 #define kActionSheetTool        101
 
-@interface ACEViewController ()<UIActionSheetDelegate, ACEDrawingViewDelegate>
+@interface ACEViewController ()<UIActionSheetDelegate, ACEDrawingViewDelegate, UITextFieldDelegate>
 
 @end
 
@@ -152,6 +152,12 @@
                 case 6:
                     self.drawingView.drawTool = ACEDrawingToolTypeEraser;
                     break;
+                    
+                case 7:
+                    self.drawingView.drawTool = ACEDrawingToolTypeText;
+                    self.drawingView.text = @"The quick brown fox jumps over the lazy dog.";
+                    break;
+
             }
         
             // if eraser, disable color and alpha selection
@@ -183,7 +189,7 @@
                                                     otherButtonTitles:@"Pen", @"Line",
                                   @"Rect (Stroke)", @"Rect (Fill)",
                                   @"Ellipse (Stroke)", @"Ellipse (Fill)",
-                                  @"Eraser",
+                                  @"Eraser", @"Text",
                                   nil];
     
     [actionSheet setTag:kActionSheetTool];
@@ -241,6 +247,12 @@
         self.drawingView.backgroundImage = img;
     }
 	[self dismissViewControllerAnimated:YES completion:nil];
+}
+
+- (BOOL)textFieldShouldReturn:(UITextField *)textField
+{
+    self.drawingView.text = textField.text;
+    return YES;
 }
 
 @end

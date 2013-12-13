@@ -166,6 +166,76 @@ CGPoint midPoint(CGPoint p1, CGPoint p2)
 
 @end
 
+#pragma mark - ACEDrawingTextTool
+
+@interface ACEDrawingTextTool ()
+@property (nonatomic, assign) CGPoint firstPoint;
+@property (nonatomic, assign) CGPoint lastPoint;
+
+@end
+
+#pragma mark -
+
+@implementation ACEDrawingTextTool
+
+@synthesize lineColor = _lineColor;
+@synthesize lineAlpha = _lineAlpha;
+@synthesize lineWidth = _lineWidth;
+@synthesize text = _text;
+
+- (void)setInitialPoint:(CGPoint)firstPoint
+{
+    self.firstPoint = firstPoint;
+}
+
+- (void)moveFromPoint:(CGPoint)startPoint toPoint:(CGPoint)endPoint
+{
+    self.lastPoint = endPoint;
+}
+
+- (void)draw
+{
+    CGContextRef context = UIGraphicsGetCurrentContext();
+    
+    // set the properties
+    CGContextSetAlpha(context, self.lineAlpha);
+    
+    // draw the rectangle
+    CGRect rectToFill = CGRectMake(self.firstPoint.x, self.firstPoint.y, self.lastPoint.x - self.firstPoint.x, self.lastPoint.y - self.firstPoint.y);
+    CGContextSetStrokeColorWithColor(context, self.lineColor.CGColor);
+    CGContextSetLineWidth(context, 1.0f);
+    CGFloat dashes[] = { 1, 1 };
+    CGContextSetLineDash(context, 0.0, dashes, 2 );
+    CGContextStrokeRect(context, rectToFill);
+    
+    // draw text
+    CGRect rectToText = CGRectInset(rectToFill, 5.0f, 5.0f);
+    UIFont *font = [UIFont boldSystemFontOfSize:13.0f];
+    CGSize textSize = [self.text sizeWithFont:font constrainedToSize:rectToText.size];
+    // center the text in rect
+    if (textSize.width < rectToText.size.width-4) {
+        rectToText = CGRectMake(rectToText.origin.x+(rectToText.size.width-textSize.width)/2,
+                                rectToText.origin.y,
+                                textSize.width, rectToText.size.height);
+    }
+    if (textSize.height < rectToText.size.height-4) {
+        rectToText = CGRectMake(rectToText.origin.x,
+                                rectToText.origin.y+(rectToText.size.height-textSize.height)/2,
+                                rectToText.size.width, textSize.height);
+    }
+    [self.text drawInRect:CGRectIntegral(rectToText) withFont:font];
+
+}
+
+- (void)dealloc
+{
+    self.lineColor = nil;
+#if !ACE_HAS_ARC
+    [super dealloc];
+#endif
+}
+
+@end
 
 #pragma mark - ACEDrawingRectangleTool
 
