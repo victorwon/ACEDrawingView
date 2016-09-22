@@ -1,6 +1,7 @@
 Pod::Spec.new do |s|
   s.name         = "ACEDrawingView"
   s.version      = "1.1.1"
+  s.author       = { 'Stefano Acerbetti' => 'acerbetti@gmail.com' }
   s.summary      = "ACEDrawingView"
   s.homepage     = "https://github.com/victorwon/ACEDrawingView"
   s.license      = 'Apache'
